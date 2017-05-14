@@ -52,7 +52,9 @@ public abstract class AbsView<T> extends JFrame implements ActionListener {
 				}
 			}
 		});
+		pTable.loadData();
 		getContentPane().add(pTable);
+		
 		createPopupMenu();
 	}
 
@@ -71,6 +73,7 @@ public abstract class AbsView<T> extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "데이터를 선택하세요");
 					return;
 				}
+				System.out.println("선택된 항목" + t);
 				pContent.setObject(t);
 				btnAdd.setText("수정");
 			}
@@ -113,21 +116,22 @@ public abstract class AbsView<T> extends JFrame implements ActionListener {
 	}
 	protected void actionPerformedBtnAdd(ActionEvent e) {
 		String msg = null;
-		if(!pContent.checkItem()){
-			return;
+		if(pContent.checkItem()){
+			if (e.getActionCommand().equals("추가")) {
+				insertItem(pContent.getObject());
+				msg = "추가되었습니다.";
+			} else {
+				updateItem(pContent.getObject());
+				msg = "수정되었습니다.";
+				btnAdd.setText("추가");
+			}
+			pContent.clearAll();
+			pTable.loadData();
+			JOptionPane.showMessageDialog(null, msg);
 		}
-		if (e.getActionCommand().equals("추가")) {
-			insertItem(pContent.getObject());
-			msg = "추가되었습니다.";
-		} else {
-			updateItem(pContent.getObject());
-			msg = "수정되었습니다.";
-			btnAdd.setText("추가");
-		}
-		pContent.clearAll();
-		JOptionPane.showMessageDialog(null, msg);
 	}
 	protected void actionPerformedBtnCancel(ActionEvent e) {
+		pContent.clearAll();
 	}
 	
 	protected abstract AbsTable<T> createTable();

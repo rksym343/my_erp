@@ -10,6 +10,7 @@ import kr.or.dgit.my_erp.dto.Department;
 import kr.or.dgit.my_erp.dto.Employee;
 import kr.or.dgit.my_erp.dto.Title;
 import kr.or.dgit.my_erp.service.DepartmentService;
+import kr.or.dgit.my_erp.service.EmployeeService;
 import kr.or.dgit.my_erp.service.TitleService;
 import kr.or.dgit.my_erp.ui.basic.ComboPanel;
 import kr.or.dgit.my_erp.ui.basic.RadioButtonPanel;
@@ -31,8 +32,8 @@ public class EmployeeContent extends AbsContent<Employee> {
 
 		pNo = new TextFieldPanel();
 		pNo.setTitle("번호");
+		pNo.setTfValue(setNo());
 		pNo.gettF().setEnabled(false);
-		pNo.setTfValue("E017005");
 		add(pNo);
 
 		pName = new TextFieldPanel();
@@ -80,7 +81,7 @@ public class EmployeeContent extends AbsContent<Employee> {
 
 	@Override
 	public void setObject(Employee t) {
-		pNo.setTfValue("E" + t.geteNo());
+		pNo.setTfValue(String.format("E%06d", t.geteNo()));
 		pName.setTfValue(t.geteName());
 		pTitle.setSelectItem(t.getTitle());
 		pSalary.setValue(t.getSalary());
@@ -91,11 +92,11 @@ public class EmployeeContent extends AbsContent<Employee> {
 
 	@Override
 	public Employee getObject() {
-		int eNo = Integer.parseInt(pNo.getTfValue().substring(1, pNo.getTfValue().length() - 1));
+		int eNo = Integer.parseInt(pNo.getTfValue().substring(1, pNo.getTfValue().length()));
 		String eName = pName.getTfValue();
 		int salary = (int) pSalary.getValue();
 		Department dno = (Department) pDepartment.getSelectItem();
-		boolean gender = pGender.getSelectedItem() == "남자" ? true : false;
+		boolean gender = pGender.getSelectedItem().equals("남") ? true : false;
 		String joindate = pJoinDate.getTfValue();
 		Title title = (Title) pTitle.getSelectItem();
 		return new Employee(eNo, eName, salary, dno, gender, joindate, title);
@@ -103,7 +104,7 @@ public class EmployeeContent extends AbsContent<Employee> {
 
 	@Override
 	public void clearAll() {
-		pNo.setTfValue("초기값");
+		pNo.setTfValue(setNo());
 		pName.setTfValue("");
 		pTitle.setSelectedIndex(0);
 		pSalary.setValue(1500000);
@@ -114,11 +115,16 @@ public class EmployeeContent extends AbsContent<Employee> {
 
 	@Override
 	public boolean checkItem() {
-		if (pNo.getTfValue().equals("")) {
+		if (pName.getTfValue().equals("")) {
 			JOptionPane.showMessageDialog(null, "빈칸이 존재합니다");
 			return false;
 		} else
 			return true;
+	}
+
+	@Override
+	public String setNo() {
+		return String.format("E%06d", EmployeeService.getInstance().selectLastNum()+1);
 	}
 
 }

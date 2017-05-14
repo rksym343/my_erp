@@ -8,9 +8,9 @@
 		<result property="gender" column="gender" />
 		<result property="joindate" column="joindate" />
 		<association property="department"
-			resultMap="kr.or.dgit.dao.DepartmentMapper.DepartmentResult" />
+			resultMap="kr.or.dgit.my_erp.dao.DepartmentMapper.DepartmentResult" />
 		<association property="title"
-			resultMap="kr.or.dgit.dao.TitleMapper.TitleResult" />
+			resultMap="kr.or.dgit.my_erp.dao.TitleMapper.TitleResult" />
 	</resultMap>
 
 	<insert id="insertEmployee" parameterType="Employee">
@@ -30,13 +30,18 @@
 	</delete>
 	<select id="selectEmployee" parameterType="Employee" resultMap="EmployeeResult">
 		select
-		eno, ename, salary, dno, gender,joindate,title from Employee
-		where eno = #{eNo}
+		e.eno, e.ename, e.salary,
+		d.dcode, d.dname, d.floor, e.gender, e.joindate, t.tcode, t.tname from Employee e
+		inner join department d on e.dno = d.dcode 
+		inner join title t on e.title = t.tcode
+		where e.eno = #{eNo}
 	</select>
 	<select id="selectByAll" resultMap="EmployeeResult">
 		select
-		eno, ename, salary,
-		dno, gender,joindate, title from Employee
+		e.eno, e.ename, e.salary,
+		d.dcode, d.dname, d.floor, e.gender, e.joindate, t.tcode, t.tname from Employee e
+		inner join department d on e.dno = d.dcode 
+		inner join title t on e.title = t.tcode order by e.eno
 	</select>
 	
 	<select id="selectLastNum"  resultType="int">

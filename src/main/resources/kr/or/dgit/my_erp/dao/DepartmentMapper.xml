@@ -3,8 +3,8 @@
 <mapper namespace="kr.or.dgit.my_erp.dao.DepartmentMapper">
 	
 	<resultMap type="Department" id="DepartmentResult">
-		<id property="dcode" column="dcode" />
-		<result property="dname" column="dname" />
+		<id property="dCode" column="dcode" />
+		<result property="dName" column="dname" />
 		<result property="floor" column="floor" />
 	</resultMap>
 

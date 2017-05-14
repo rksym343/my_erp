@@ -81,7 +81,15 @@ public class Employee {
 
 	public Object[] toArray(){
 		// "번호", "사원명", "직책", "급여", "성별", "부서", "입사일"
-		return new Object[]{String.format("E%06d", eNo), eName, title, String.format("%,d", salary), gender, department, joindate};
+		return new Object[]{String.format("E%06d", eNo), eName, title, String.format("%,d", salary), gender==true?"남자":"여자", department, joindate};
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Employee [eNo=%s, eName=%s, salary=%s, department=%s, gender=%s, joindate=%s, title=%s]",
+				eNo, eName, salary, department, gender, joindate, title);
+	}
+	
+	
 
 }

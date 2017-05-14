@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 
 import kr.or.dgit.my_erp.dto.Title;
+import kr.or.dgit.my_erp.service.TitleService;
 import kr.or.dgit.my_erp.ui.basic.TextFieldPanel;
 
 public class TitleContent extends AbsContent<Title> {
@@ -16,6 +17,8 @@ public class TitleContent extends AbsContent<Title> {
 
 		pTNo = new TextFieldPanel();
 		pTNo.setTitle("번호");
+		pTNo.setTfValue(setNo());
+		pTNo.gettF().setEnabled(false);
 		add(pTNo);
 
 		pTName = new TextFieldPanel();
@@ -26,20 +29,20 @@ public class TitleContent extends AbsContent<Title> {
 
 	@Override
 	public void setObject(Title t) {
-		pTNo.setTfValue("T" + t.gettCode());
+		pTNo.setTfValue(String.format("T%03d", t.gettCode()));
 		pTName.setTfValue(t.gettName());
 	}
 
 	@Override
 	public Title getObject() {
-		int tCode = Integer.parseInt(pTNo.getTfValue().substring(1, pTNo.getTfValue().length() - 1));
+		int tCode = Integer.parseInt(pTNo.getTfValue().substring(1, pTNo.getTfValue().length()));
 		String tName = pTName.getTfValue();
 		return new Title(tCode, tName);
 	}
 
 	@Override
 	public void clearAll() {
-		pTNo.setTfValue("초기값");
+		pTNo.setTfValue(setNo());
 		pTName.setTfValue("");
 
 	}
@@ -51,6 +54,11 @@ public class TitleContent extends AbsContent<Title> {
 			return false;
 		} else
 			return true;
+	}
+
+	@Override
+	public String setNo() {
+		return String.format("T%03d", TitleService.getInstance().selectLastNum()+1);
 	}
 
 }

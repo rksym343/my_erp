@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 
 import kr.or.dgit.my_erp.dto.Department;
+import kr.or.dgit.my_erp.service.DepartmentService;
 import kr.or.dgit.my_erp.ui.basic.TextFieldPanel;
 
 public class DepartmentContent extends AbsContent<Department> {
@@ -17,6 +18,8 @@ public class DepartmentContent extends AbsContent<Department> {
 
 		pDNo = new TextFieldPanel();
 		pDNo.setTitle("번호");
+		pDNo.setTfValue(setNo());
+		pDNo.gettF().setEnabled(false);
 		add(pDNo);
 
 		pDName = new TextFieldPanel();
@@ -31,14 +34,14 @@ public class DepartmentContent extends AbsContent<Department> {
 
 	@Override
 	public void setObject(Department t) {
-		pDNo.setTfValue("D" + t.getdCode());
+		pDNo.setTfValue(String.format("D%03d", t.getdCode()));
 		pDName.setTfValue(t.getdName());
 		pDFloor.setTfValue(t.getFloor() + "");
 	}
 
 	@Override
 	public Department getObject() {
-		int dcode = Integer.parseInt(pDNo.getTfValue().substring(1, pDNo.getTfValue().length() - 1));
+		int dcode = Integer.parseInt(pDNo.getTfValue().substring(1, pDNo.getTfValue().length()));
 		String dname = pDName.getTfValue();
 		int floor = Integer.parseInt(pDFloor.getTfValue());
 		return new Department(dcode, dname, floor);
@@ -46,7 +49,7 @@ public class DepartmentContent extends AbsContent<Department> {
 
 	@Override
 	public void clearAll() {
-		pDNo.setTfValue("초기값");
+		pDNo.setTfValue(setNo());
 		pDName.setTfValue("");
 		pDFloor.setTfValue("");
 	}
@@ -58,6 +61,11 @@ public class DepartmentContent extends AbsContent<Department> {
 			return false;
 		} else
 			return true;
+	}
+
+	@Override
+	public String setNo() {
+		return String.format("D%03d", DepartmentService.getInstance().selectLastNum()+1);
 	}
 
 }

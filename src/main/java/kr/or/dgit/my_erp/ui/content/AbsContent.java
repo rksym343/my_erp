@@ -7,4 +7,5 @@ public abstract class AbsContent<T> extends JPanel{
 	public abstract T getObject();
 	public abstract void clearAll();
 	public abstract boolean checkItem(); 
+	public abstract String setNo();
 }

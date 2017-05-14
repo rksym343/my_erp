@@ -1,33 +1,42 @@
 package kr.or.dgit.my_erp.dto;
 
 public class Department {
-	private int dcode;
-	private String dname;
+	private int dCode;
+	private String dName;
 	private int floor;
 
 	public Department() {
 	}
 
 	public Department(int dcode, String dname, int floor) {
-		this.dcode = dcode;
-		this.dname = dname;
+		this.dCode = dcode;
+		this.dName = dname;
 		this.floor = floor;
 	}
 
-	public int getdcode() {
-		return dcode;
+	@Override
+	public String toString() {
+		return String.format("%s(%s층)", dName, floor);
 	}
 
-	public void setdcode(int dCode) {
-		this.dcode = dCode;
+	public Object[] toArray(){
+		return new Object[]{String.format("D%03d", dCode), dName, floor};
 	}
 
-	public String getdname() {
-		return dname;
+	public int getdCode() {
+		return dCode;
 	}
 
-	public void setdname(String dName) {
-		this.dname = dName;
+	public void setdCode(int dCode) {
+		this.dCode = dCode;
+	}
+
+	public String getdName() {
+		return dName;
+	}
+
+	public void setdName(String dName) {
+		this.dName = dName;
 	}
 
 	public int getFloor() {
@@ -39,14 +48,27 @@ public class Department {
 	}
 
 	@Override
-	public String toString() {
-		return String.format("%s(%s층)", dname, floor);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + dCode;
+		return result;
 	}
 
-	public Object[] toArray(){
-		return new Object[]{String.format("D%03d", dcode), dname, floor};
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		if (dCode != other.dCode)
+			return false;
+		return true;
 	}
-
+	
 	
 
 }

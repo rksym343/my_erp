@@ -28,7 +28,7 @@ dependencies {
 
 version = 1.0
 
-mainClassName = 'kr.or.dgit.my_erp.ui'
+mainClassName = 'kr.or.dgit.my_erp.ui.Main'
 jar {
 	baseName = 'Main'
 	appendix = 'bin'

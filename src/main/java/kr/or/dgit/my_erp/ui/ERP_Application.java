@@ -61,24 +61,22 @@ public class ERP_Application extends JFrame implements ActionListener {
 	protected void actionPerformedBtnEmployee(ActionEvent e) {
 		if (ev == null) {
 			ev = new EmployeeView();
-			ev.setVisible(true);
 		}
-
+		ev.setVisible(true);
 	}
 
 	protected void actionPerformedBtnDepartment(ActionEvent e) {
 		if (dv == null) {
 			dv = new DepartmentView();
-			dv.setVisible(true);
 		}
-
+		dv.setVisible(true);
 	}
 
 	protected void actionPerformedBtnTitle(ActionEvent e) {
 		if (tv == null) {
 			tv = new TitleView();
-			tv.setVisible(true);
 		}
 
+		tv.setVisible(true);
 	}
 }
