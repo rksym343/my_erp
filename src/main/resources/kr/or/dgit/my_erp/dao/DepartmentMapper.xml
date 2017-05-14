@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.my_erp.dao.DepartmentMapper">
+	
+	<resultMap type="Department" id="DepartmentResult">
+		<id property="dcode" column="dcode" />
+		<result property="dname" column="dname" />
+		<result property="floor" column="floor" />
+	</resultMap>
+
+	<insert id="insertDepartment" parameterType="Department">
+		insert into department (dcode,
+		dname,floor) values(#{dCode}, #{dName}, #{floor})
+	</insert>
+	<update id="updateDepartment" parameterType="Department">
+		UPDATE department set
+		dname = #{dName}, floor=#{floor} where dcode = #{dCode}
+	</update>
+	<delete id="deleteDepartment" parameterType="Department">
+		delete from department where
+		dcode = #{dCode}
+	</delete>
+	<select id="selectDepartment" parameterType="Department" resultMap="DepartmentResult">
+		select
+		dcode, dname, floor from department where dcode = #{dCode}
+	</select>
+	<select id="selectByAll"  resultMap="DepartmentResult">
+		select
+		dcode, dname, floor from department
+	</select>
+	
+	<select id="selectLastNum"  resultType="int">
+		select max(dcode) from department
+	</select>
+
+</mapper>

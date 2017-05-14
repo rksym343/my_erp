@@ -26,6 +26,6 @@
 	</environments>
 	
 	<mappers>	
-		<package name="kr.or.dgit.dao"/>
+		<package name="kr.or.dgit.my_erp.dao"/>
 	</mappers>
 </configuration>

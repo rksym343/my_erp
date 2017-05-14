@@ -8,9 +8,6 @@ tasks.withType(JavaCompile){
 }
 repositories {
     jcenter()
-    flatDir{
-    	dirs 'libs'
-    }
 }
 
 dependencies {
@@ -26,13 +23,12 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
-    compile files('libs/erp_myfremawork.jar')
    
 }
 
 version = 1.0
 
-mainClassName = 'kr.or.dgit.dao'
+mainClassName = 'kr.or.dgit.my_erp.ui'
 jar {
 	baseName = 'Main'
 	appendix = 'bin'
