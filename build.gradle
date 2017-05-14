@@ -23,6 +23,8 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
+    compile files('libs/SettingUI-bin-1.0.jar')
+    
    
 }
 
@@ -30,7 +32,7 @@ version = 1.0
 
 mainClassName = 'kr.or.dgit.my_erp.ui.Main'
 jar {
-	baseName = 'Main'
+	baseName = 'ERP_Application'
 	appendix = 'bin'
 	manifest{
 		attributes 'Title':baseName, 'Version':version, 'Main-Class':mainClassName
